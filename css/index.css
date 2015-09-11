@@ -50,10 +50,13 @@ table {
 
 /* LEEETSSSS BEGGGGIN! */
 
-body {
-	/*overflow: hidden;*/
+html {
+	height: 100vh;
 }
 
+body {
+	height: 100vh;
+}
 .horizontalPicture {
 	width: 100vw;
 	height: 33vh;
@@ -78,15 +81,19 @@ body {
 	background-size: 100% auto;
 	background-repeat: no-repeat;
 	background-position: 10%;
+	height: 34vh;
 }
 
 #splashText {
 	width: 70vw;
-	height: 30vh;
+	height: 50vh;
 	margin: 22vh auto;
 	position: relative;
 	top: -100vh;
 	z-index: 2;
+	background-color: rgba(85,85,85,0.5);
+	border-radius: 5px;
+
 }
 
 #splashText h1 {
@@ -121,6 +128,7 @@ body {
 
 #subSplashText h4 {
 	width: 40%;
+	height: 10%;
 	float: left;
 	text-align: left;
 	margin: 0;
@@ -130,18 +138,35 @@ body {
 	font-size: 1.6em;
 
 }
-
-#centered {
+#center {
 	text-align: center;
-	width: 50vw;
-	margin: 0 auto;
-	z-index: 3;
 }
 .btnCon {
-	position: relative;
-	top: -110vh;
-	text-align: center;
-	margin: 0 auto;
+	margin-top: 3.5%;
+}
+
+#slidingLeft {
+	position: fixed;
+	top: 0;
+	left: 100vw;
+	width: 70vw;
+	height: 50vh;
+	z-index: 4;
+	margin: 22vh 15vw;
+	background-color: rgba(85,85,85,0.5);
+}
+
+.mapQuery {
+	width: 70%;
+	margin: 8% 15%;
+}
+
+#originInput {
+	width: 70%;
+}
+
+#destinInput {
+	width: 70%;
 }
 
 
