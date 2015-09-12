@@ -25,12 +25,14 @@
   		<h1> WELCOME TO </h1>
   		<h2> ECO|BIKE </h2>
   		<div id="subSplashText"> <h3> Powered By </h3> <h4>SimplyCoded</h4> </div>
-  		<div id="center"><button type="button" class="btn btn-primary btn-lg btnCon">Continue</button></div>
+  		<div id="center"><button type="button" class="btn btn-primary btn-lg btnCon" id="firstButton">Continue</button></div>
   	</div>
 
   	<div id="slidingLeft">
+  		<p> Where will you be going? </p>
   		<input type="text" class="form-control mapQuery" id="originInput" placeholder="Origin">
   		<input type="text" class="form-control mapQuery" id="destinInput" placeholder="Destination">
+  		<div id="center"><button type="button" id="secondButton" class="btn btn-primary btn-lg btnCon">Continue</button></div>
   	</div>
   
 
@@ -39,15 +41,27 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		$( ".btnCon" ).click(function() {
+		$( "#firstButton" ).click(function() {
   			$( "#slidingLeft" ).animate({
     			left: "0"
-  			}, 2500, function() {
+  			}, 1000, function() {
  			});
  			$( "#splashText" ).animate({
     			left: "-100vw"
-  			}, 2500, function() {
+  			}, 1000, function() {
  			});
+		});
+		$( "#secondButton" ).click(function() {
+			var currentOrigin = $("#originInput").val();
+			var currentDest = $("#destinInput").val();
+			if (currentOrigin.localeCompare("") && currentDest.localeCompare("")) {
+	  			$( "#slidingLeft" ).animate({
+	    			left: "-100vw"
+	  			}, 1000, function() {
+	 			});
+	 		} else {
+	 			console.log("User failed to type both Origin & Destination");
+	 		}
 		});
 	</script>
   </body>

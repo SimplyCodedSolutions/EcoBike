@@ -157,9 +157,16 @@ body {
 	border-radius: 5px;
 }
 
+#slidingLeft p {
+	text-align: center;
+	color: white;
+	font-family: Avenir;
+	font-size: 2em;
+}
+
 .mapQuery {
 	width: 70%;
-	margin: 8% 15%;
+	margin: 3.9% 15%;
 }
 
 #originInput {
