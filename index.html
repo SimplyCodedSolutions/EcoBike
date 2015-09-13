@@ -3,6 +3,11 @@
 <html>
 
   <head>
+  	<meta charset="UTF-8">
+	<meta name="description" content="Find the economic, health and environmental benefits of using your Bike as your daily mode of transportation.">
+	<meta name="author" content="SimplyCodedSolution">
+	<meta name="robots" content="Eco,Bike,Maps,Calculate,Financial,Benefit,Cost Analysis,Help,Health,Fitness,Economical,Work,Commute,Biking,Transport,SoBi" />
+	<meta name="googlebot" content="Eco,Bike,Maps,Calculate,Financial,Benefit,Cost Analysis,Help,Health,Fitness,Economical,Work,Commute,Biking,Transport,SoBi" />
     <title> EcoBike | Powered by SimplyCodedSolutions </title>
     <!-- Need 1 (Mount) High Res Pictures  -->
     <link href="css/index.css" rel="stylesheet">
@@ -34,12 +39,23 @@
   		<input type="text" class="form-control mapQuery" id="destinInput" placeholder="Destination">
   		<div id="center"><button type="button" id="secondButton" class="btn btn-primary btn-lg btnCon">Continue</button></div>
   	</div>
+
+  	<div id="finalSlide">
+  		<div id="finalSlideMap">
+  		</div>
+		<button type="button" class="btn btn-default floatLeft">Use Current Route</button>
+
+		<button type="button" class="btn btn-primary floatLeft">Make Custom Rute</button>
+
+		<button type="button" class="btn btn-danger floatLeft">Change Origin/Destination</button>
+
+  	</div>
   
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 	</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js"></script>
+	<script src="javascript/mapTools.js"></script>
 	<script type="text/javascript">
 		$( "#firstButton" ).click(function() {
   			$( "#slidingLeft" ).animate({
@@ -54,16 +70,35 @@
 		$( "#secondButton" ).click(function() {
 			var currentOrigin = $("#originInput").val();
 			var currentDest = $("#destinInput").val();
-			if (currentOrigin.localeCompare("") && currentDest.localeCompare("")) {
-	  			$( "#slidingLeft" ).animate({
-	    			left: "-100vw"
+
+			if(!(currentOrigin.localeCompare(""))) {
+				$("#originInput").css("border","2px solid red");
+			}
+			if(!(currentDest.localeCompare(""))) {
+				$("#destinInput").css("border","2px solid red");
+			}
+			if (currentDest.localeCompare("") && currentOrigin.localeCompare("")) {
+				$( "#slidingLeft" ).animate({
+	    			top: "-100vh"
 	  			}, 1000, function() {
 	 			});
-	 		} else {
-	 			console.log("User failed to type both Origin & Destination");
-	 		}
+	 			$( "#finalSlide" ).animate({
+	    			top: "0"
+	  			}, 1000, function() {
+	 			});
+			}
 		});
+
+		var map;
+		function initMap() {
+ 			map = new google.maps.Map(document.getElementById('finalSlideMap'), {
+    		center: {lat: -34.397, lng: 150.644},
+    		zoom: 8
+  			});
+		}
 	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_26zBFcrneCFectOi3tuYw1UXhw04i_g&callback=initMap">
+	</script>q
   </body>
   
 </html>

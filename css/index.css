@@ -177,4 +177,28 @@ body {
 	width: 70%;
 }
 
+#finalSlide {
+	width: 50vw;
+	height: 85vh;
+	position: fixed;
+	top: 100vh;
+	z-index: 4;
+	margin: 10vh 22vw;
+	background-color: rgba(85,85,85,0.5);
+}
+
+#finalSlideMap {
+	width: 50%;
+	height: 50%;
+	margin: 5% auto;
+	background-color: white;
+
+}
+
+.floatLeft {
+	border-radius: 50px;
+	width: 40%;
+	margin: 5% 30%;
+}
+
 
