@@ -1,0 +1,7 @@
+Here are some things to do, followed by any relevant files that would need to be altered.
+
+Code Clean up and map resize, index.html, css/index.css
+Change inputs to address focused and place route on map on next "slide", index.html
+Figure out how to make custom routes, index.html
+Any design changes for landing page?, index.html
+Add any more, thingsToDo.txt
