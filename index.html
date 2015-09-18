@@ -28,7 +28,7 @@
 
   	<div id="slidingLeft">
   		<p> Where will you be going? </p>
-  		<input type="text" class="form-control mapQuery has-error" id="originInput" placeholder="Origin">
+  		<input type="text" class="form-control mapQuery" id="originInput" placeholder="Origin" >
   		<input type="text" class="form-control mapQuery" id="destinInput" placeholder="Destination">
   		<div id="center"><button type="button" id="secondButton" class="btn btn-primary btn-lg btnCon">Continue</button></div>
   	</div>
@@ -49,7 +49,57 @@
 	</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="javascript/mapTools.js"></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js"></script> -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_26zBFcrneCFectOi3tuYw1UXhw04i_g&libraries=places&callback=initLoc"
+         async defer></script>
 	<script type="text/javascript">
+
+		var map;
+		function initialize() {
+		    var mapCanvas = document.getElementById('defaultMapSlideMap');
+		    var mapOptions = {
+		        center: new google.maps.LatLng(44.5403, -78.5463),
+		        zoom: 8,
+		        mapTypeId: google.maps.MapTypeId.ROADMAP
+		    }
+		    map = new google.maps.Map(mapCanvas, mapOptions);
+		    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+		}
+		function initLoc() {
+
+			var input = document.getElementById('originInput');
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			google.maps.event.addDomListener(window, 'load', initLoc);
+		}
+		function initDest() {
+
+			var input = document.getElementById('destinInput');
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			google.maps.event.addDomListener(window, 'load', initDest);
+		}
+		function initDirections(lat1, long1, lat2, long2){
+			var map = document.getElementById('defaultMapSlideMap');
+			var location1 = {lat: lat1, long: long1};
+			var location2 = {lat: lat2, long: long2};
+			
+			var directionsService = new google.maps.DirectionsService();
+			var directionDisplay = new google.maps.DirectionRenderer({map: map});
+			
+			var request = {
+				destination: location2,
+				origin: location1,
+				travelMode: google.maps.TravelMode.BICYCLING
+			};
+
+			directionsService.route(request, function(response, status){
+				if(status == google.maps.DirectionsStatus.OK){
+					directionDisplay.setDirections(response);
+				}
+			});
+			
+		}//initDirectionsMap()
 		$( "#firstButton" ).click(function() {
   			$( "#slidingLeft" ).animate({
     			left: "0"
@@ -60,20 +110,21 @@
     			opacity: 0
   			}, 1000, function() {
  			});
+ 			initLoc();
+ 			initDest();
 		});
 		$( "#secondButton" ).click(function() {
 			var currentOrigin = $("#originInput").val();
 			var currentDest = $("#destinInput").val();
 
 			if(!(currentOrigin.localeCompare(""))) {
-				$("#originInput").addClass("has-warning");
-				$("#originInput").css("background-color","rgba(50,0,0,0.5");
+				$("#originInput").css("border","2px solid red");
 			}
 			if(!(currentDest.localeCompare(""))) {
 				$("#destinInput").css("border","2px solid red");
-				$("#originInput").css("background-color","rgba(50,0,0,0.5");
 			}
 			if (currentDest.localeCompare("") && currentOrigin.localeCompare("")) {
+				//Add Dest + Origin to defaultMapSlideMap
 				$( "#slidingLeft" ).animate({
 	    			top: "-100vh",
 	    			opacity: 0
@@ -83,25 +134,57 @@
 	    			top: "0"
 	  			}, 1000, function() {
 	 			});
+	 			initialize();
+				var geocoder = new google.maps.Geocoder();
+				var addressOrigin = currentOrigin;
+				var addressDest = currentDest;
+				var latitudeO,latitudeD,longitudeO,longitudeD;
+
+
+				geocoder.geocode( { 'address': addressOrigin}, function(results, status) {
+
+				if (status == google.maps.GeocoderStatus.OK) {
+				    latitudeO = results[0].geometry.location.lat();
+					longitudeO = results[0].geometry.location.lng();
+					
+				    } 
+				}); 
+
+				geocoder.geocode( { 'address': addressDest}, function(resultsDest, status) {
+
+				if (status == google.maps.GeocoderStatus.OK) {
+				    latitudeD = resultsDest[0].geometry.location.lat();
+					longitudeD = resultsDest[0].geometry.location.lng();
+
+				    } 
+				});
+
+				var location1 = {lat: latitudeO, long: longitudeO};
+				var location2 = {lat: latitudeD, long: longitudeD};
+				
+				
+				var directionsService = new google.maps.DirectionsService();
+				var directionDisplay = new google.maps.DirectionRenderer({map: map});
+				
+				var request = {
+					destination: location2,
+					origin: location1,
+					travelMode: google.maps.TravelMode.BICYCLING
+				};
+
+				directionsService.route(request, function(response, status){
+					if(status == google.maps.DirectionsStatus.OK){
+						directionDisplay.setDirections(response);
+					}
+				});
+
 			}
 		});
-
-		var input = document.getElementById('originInput');
-  		var searchBox = new google.maps.places.SearchBox(input);
- 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-		var map;
-		function initMap() {
- 			map = new google.maps.Map(document.getElementById('defaultMapSlideMap'), {
-    		center: {lat: -34.397, lng: 150.644},
-    		zoom: 8
-  			});
-		}
 	</script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_26zBFcrneCFectOi3tuYw1UXhw04i_g&callback=initMap">
-	</script>
+	
+	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/bootstrap.min.js"></script>
 
   </body>
