@@ -37,7 +37,7 @@
   		<div id="defaultMapSlideMap"></div>
 		<button type="button" class="btn btn-default floatLeft">Use Current Route</button>
 
-		<button type="button" class="btn btn-primary floatLeft">Make Custom Rute</button>
+		<button type="button" class="btn btn-primary floatLeft">Make Custom Route</button>
 
 		<button type="button" class="btn btn-danger floatLeft">Change Origin/Destination</button>
 
@@ -55,14 +55,19 @@
 	<script type="text/javascript">
 
 		var map;
+		var directionsDisplay;
+		var directionsService;
 		function initialize() {
 		    var mapCanvas = document.getElementById('defaultMapSlideMap');
+		    directionsDisplay = new google.maps.DirectionsRenderer();
+		    directionsService = new google.maps.DirectionsService();
 		    var mapOptions = {
 		        center: new google.maps.LatLng(44.5403, -78.5463),
 		        zoom: 8,
 		        mapTypeId: google.maps.MapTypeId.ROADMAP
 		    }
 		    map = new google.maps.Map(mapCanvas, mapOptions);
+		    directionsDisplay.setMap(map);
 		    google.maps.event.addDomListener(window, 'load', initialize);
 
 
@@ -84,8 +89,7 @@
 			var location1 = {lat: lat1, long: long1};
 			var location2 = {lat: lat2, long: long2};
 			
-			var directionsService = new google.maps.DirectionsService();
-			var directionDisplay = new google.maps.DirectionRenderer({map: map});
+			directionDisplay = new google.maps.DirectionRenderer();
 			
 			var request = {
 				destination: location2,
@@ -159,25 +163,19 @@
 				    } 
 				});
 
-				var location1 = {lat: latitudeO, long: longitudeO};
-				var location2 = {lat: latitudeD, long: longitudeD};
+				var location1 = new google.maps.LatLng(latitudeO, longitudeO);
+				var location2 = new google.maps.LatLng(latitudeD, longitudeD);blic 
 				
-				
-				var directionsService = new google.maps.DirectionsService();
-				var directionDisplay = new google.maps.DirectionRenderer({map: map});
 				
 				var request = {
 					destination: location2,
 					origin: location1,
-					travelMode: google.maps.TravelMode.BICYCLING
+					travelMode: google.maps.TravelMode.DRIVING
 				};
 
 				directionsService.route(request, function(response, status){
-					if(status == google.maps.DirectionsStatus.OK){
-						directionDisplay.setDirections(response);
-					}
+						directionsDisplay.setDirections(response);
 				});
-
 			}
 		});
 	</script>
